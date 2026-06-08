@@ -1,8 +1,8 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 class Main{
     public static void main(String[] args){
+
         Scanner scanner = new Scanner(System.in);
         StudentController studentController = new StudentController();
         //defualt student dumy data
@@ -38,28 +38,28 @@ class Main{
                         System.out.print("Enter studentGPA: ");
                         double gpa = scanner.nextDouble();
 
-                        Student newStudent = new Student(id, name, department, gpa);
-                        studentController.addStudent(newStudent);
+                        studentController.addStudent(new Student(id, name, department, gpa));
                     }
-                }
-                else if (choice == 5) {
-                    ArrayList<Student> allStudent = studentController.studentList;
+                } else if (choice == 2) {
+                    System.out.print("Enter the id of student to search: ");
+                    int stdId = scanner.nextInt();
+                    scanner.nextLine();
 
-                    // Header
-                    System.out.println("\n=====================================================================");
-                    System.out.printf("%-10s | %-20s | %-20s | %-5s%n", "ID", "Name", "Department", "GPA");
-                    System.out.println("=====================================================================");
+                    studentController.searchStudent(stdId);
+                } else if (choice == 3) {
+                    System.out.print("Enter Student Id you want to update: ");
+                    int stdId = scanner.nextInt();
+                    scanner.nextLine();
 
-                    // Data Rows
-                    for (Student s : allStudent) {
-                        System.out.printf("%-10d | %-20s | %-20s | %-5.2f%n",
-                                s.getStudentId(),
-                                s.getName(),
-                                s.getDepartment(),
-                                s.getGPA()
-                        );
-                    }
-                    System.out.println("=====================================================================");
+                    studentController.updateStudentInfo(stdId);
+                } else if (choice == 4) {
+                    System.out.print("Enter the id of the student you want to delete: ");
+                    int stdId = scanner.nextInt();
+                    scanner.nextLine();
+
+                    studentController.deleteStudent(stdId);
+                } else if (choice == 5) {
+                    studentController.displayAllStudent();
                 }
 
                  else if (choice == 6) {
