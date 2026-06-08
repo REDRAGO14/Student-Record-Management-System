@@ -99,5 +99,5 @@ public class StudentController {
         }
     }
 
-    public ArrayList<Student> getStudentList(){return studentList;}
+
 }
