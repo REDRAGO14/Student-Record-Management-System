@@ -5,13 +5,7 @@ class Main{
 
         Scanner scanner = new Scanner(System.in);
         StudentController studentController = new StudentController();
-        //defualt student dumy data
-        Student s1 = new Student(1, "DAGIM", "SOFTWARE", 4);
-
-        studentController.addStudent(s1);
-        studentController.addStudent(new Student(2, "Yosef", "SOFTWARE", 3.8));
-
-
+        studentController.loadFromTextFile();
 
         boolean running = true;
         while(running) {
@@ -39,7 +33,9 @@ class Main{
                         double gpa = scanner.nextDouble();
 
                         studentController.addStudent(new Student(id, name, department, gpa));
+
                     }
+                    studentController.saveToTextFile(studentController.studentList);
                 } else if (choice == 2) {
                     System.out.print("Enter the id of student to search: ");
                     int stdId = scanner.nextInt();
@@ -52,12 +48,16 @@ class Main{
                     scanner.nextLine();
 
                     studentController.updateStudentInfo(stdId);
+
+                    studentController.saveToTextFile(studentController.studentList);
                 } else if (choice == 4) {
                     System.out.print("Enter the id of the student you want to delete: ");
                     int stdId = scanner.nextInt();
                     scanner.nextLine();
 
                     studentController.deleteStudent(stdId);
+
+                    studentController.saveToTextFile(studentController.studentList);
                 } else if (choice == 5) {
                     studentController.displayAllStudent();
                 }

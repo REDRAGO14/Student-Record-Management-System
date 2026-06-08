@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -99,5 +102,55 @@ public class StudentController {
         }
     }
 
+    public void saveToTextFile(ArrayList<Student> studentList){
+        File dir = new File("data");
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
 
+        File file = new File(dir,"students.txt");
+
+        try(PrintWriter writer = new PrintWriter(file)){
+            for(Student s: studentList){
+                writer.println(s.getStudentId() + "," + s.getName() + "," + s.getDepartment() + "," + s.getGPA());
+            }
+        }catch (IOException e){
+            System.out.println("Error saving data" + e.getMessage());
+        }
+    }
+
+    public ArrayList<Student> loadFromTextFile(){
+        ArrayList<Student> studentList = new ArrayList<>();
+        File file = new File("data/students.txt");
+
+        if(!file.exists()){
+            return studentList;
+        }
+
+        try(Scanner scanner = new Scanner(file)){
+            while (scanner.hasNextLine()){
+                String line = scanner.nextLine();
+
+                if(line.trim().isEmpty()) continue;
+
+                String[] data = line.split(",");
+
+                int id = Integer.parseInt(data[0]);
+                String name = data[1];
+                String department = data[2];
+                double gpa = Double.parseDouble(data[3]);
+
+                Student student = new Student(id, name, department, gpa);
+                studentList.add(student);
+            }
+        }catch (IOException e){
+            System.out.println("Error saving data" + e.getMessage());
+        }
+        this.studentList = studentList;
+        return studentList;
+    }
+
+    public ArrayList<Student> getStudentList(){
+        return studentList;
+    }
 }
