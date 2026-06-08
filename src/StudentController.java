@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
@@ -148,6 +146,35 @@ public class StudentController {
         }
         this.studentList = studentList;
         return studentList;
+    }
+
+    public void saveToSerializedObject(ArrayList<Student> studentList){
+        File file = new File("data/students.ser");
+
+        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))){
+            oos.writeObject(studentList);
+            System.out.println("data successfully serialized to binary object file!");
+        }catch (IOException e){
+            System.out.println("Error Serializing data" + e.getMessage());
+        }
+    }
+
+    public ArrayList<Student> loadFromSerializedObject(){
+        File file = new File("data/students.ser");
+        if(!file.exists()){
+            return new ArrayList<>();
+        }
+
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
+
+            ArrayList<Student> studentList = (ArrayList<Student>) ois.readObject();
+            this.studentList = studentList;
+            return studentList;
+        }catch (IOException | ClassNotFoundException e){
+            System.out.println("Deserialization Error: " + e.getMessage());
+            return new ArrayList<>();
+        }
+
     }
 
     public ArrayList<Student> getStudentList(){

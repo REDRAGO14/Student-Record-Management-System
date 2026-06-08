@@ -5,7 +5,9 @@ class Main{
 
         Scanner scanner = new Scanner(System.in);
         StudentController studentController = new StudentController();
-        studentController.loadFromTextFile();
+
+
+        studentController.loadFromSerializedObject();
 
         boolean running = true;
         while(running) {
@@ -36,6 +38,7 @@ class Main{
 
                     }
                     studentController.saveToTextFile(studentController.studentList);
+                    studentController.saveToSerializedObject(studentController.studentList);
                 } else if (choice == 2) {
                     System.out.print("Enter the id of student to search: ");
                     int stdId = scanner.nextInt();
@@ -50,6 +53,7 @@ class Main{
                     studentController.updateStudentInfo(stdId);
 
                     studentController.saveToTextFile(studentController.studentList);
+                    studentController.saveToSerializedObject(studentController.studentList);
                 } else if (choice == 4) {
                     System.out.print("Enter the id of the student you want to delete: ");
                     int stdId = scanner.nextInt();
@@ -58,6 +62,7 @@ class Main{
                     studentController.deleteStudent(stdId);
 
                     studentController.saveToTextFile(studentController.studentList);
+                    studentController.saveToSerializedObject(studentController.studentList);
                 } else if (choice == 5) {
                     studentController.displayAllStudent();
                 }
