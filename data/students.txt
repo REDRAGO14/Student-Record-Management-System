@@ -1,0 +1,6 @@
+3,Yohanes,software,2.56
+1,Dagim,software,4.0
+2,Yosef,software,3.65
+4,Danny,software,3.7
+5,yididia,software,3.21
+6,Bisrat,software,4.0

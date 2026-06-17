@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 class Main{
@@ -7,8 +9,14 @@ class Main{
         StudentController studentController = new StudentController();
 
 
-        studentController.loadFromSerializedObject();
-
+        studentController.loadFromBinaryFile();
+        for(Student s: studentController.getHighestGpa()){
+            int id = s.getStudentId();
+            String name = s.getName();
+            String dept = s.getDepartment();
+            double gpa = s.getGPA();
+            System.out.println(name + " (ID: " + id + ") from " + dept + " has the highest GPA: " + gpa);
+        }
         boolean running = true;
         while(running) {
             System.out.println("\n=============Student Record Management System===================");
@@ -17,7 +25,9 @@ class Main{
             System.out.println("3, Update Student Info ");
             System.out.println("4, Delete Student ");
             System.out.println("5, View All Student ");
-            System.out.println("6, Exit");
+            System.out.println("6, view Student Report");
+            System.out.println("7, View File Metadata");
+            System.out.println("8, Exit");
             System.out.print("Enter Your Choice: ");
             int choice = scanner.nextInt();
 
@@ -39,6 +49,7 @@ class Main{
                     }
                     studentController.saveToTextFile(studentController.studentList);
                     studentController.saveToSerializedObject(studentController.studentList);
+                    studentController.saveToBinaryFile(studentController.studentList);
                 } else if (choice == 2) {
                     System.out.print("Enter the id of student to search: ");
                     int stdId = scanner.nextInt();
@@ -54,6 +65,7 @@ class Main{
 
                     studentController.saveToTextFile(studentController.studentList);
                     studentController.saveToSerializedObject(studentController.studentList);
+                    studentController.saveToBinaryFile(studentController.studentList);
                 } else if (choice == 4) {
                     System.out.print("Enter the id of the student you want to delete: ");
                     int stdId = scanner.nextInt();
@@ -63,11 +75,43 @@ class Main{
 
                     studentController.saveToTextFile(studentController.studentList);
                     studentController.saveToSerializedObject(studentController.studentList);
+                    studentController.saveToBinaryFile(studentController.studentList);
                 } else if (choice == 5) {
                     studentController.displayAllStudent();
-                }
-
-                 else if (choice == 6) {
+                } else if (choice == 6) {
+                    System.out.println("    1, Highest GPA");
+                    System.out.println("    2, Lowest GPA");
+                    System.out.println("    3, Average GPA");
+                    System.out.println("    4, Total Student");
+                    System.out.print("What do you want to view: ");
+                    int reportChoice = scanner.nextInt();
+                    scanner.nextLine();
+                    if(reportChoice == 1){
+                        List<Student> highestGpaStudents = studentController.getHighestGpa();
+                        if(highestGpaStudents != null){
+                            for(Student s: highestGpaStudents){
+                                System.out.println(s.getName() +" from " + s.getDepartment()+ " department has scored: " + s.getGPA());
+                            }
+                        }
+                    }else if(reportChoice == 2){
+                        List<Student> lowestGpaStudent = studentController.getLowestGpa();
+                        if(lowestGpaStudent != null){
+                            for(Student s: lowestGpaStudent){
+                                System.out.println(s.getName() +" from " + s.getDepartment()+ " department has scored: " + s.getGPA());
+                            }
+                        }
+                    } else if (reportChoice == 3) {
+                        System.out.println("the average GPA is: " + studentController.getAverageGpa());
+                    } else if (reportChoice == 4) {
+                        studentController.getTotalStudent();
+                    }
+                } else if (choice == 7) {
+                    System.out.print("Enter File Path: ");
+                    String filePath = scanner.next();
+                    studentController.displayFileProperties(filePath);
+                } else if (choice == 8) {
+                    studentController.b
+                } else if (choice == 9) {
                     System.out.println("Thank you for using our app:)");
                     running = false;
                 }
